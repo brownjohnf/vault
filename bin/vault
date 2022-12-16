@@ -56,13 +56,12 @@ case $command in
     echo "--> Unmounting complete."
   ;;
   create)
-    echo "--> This will partition, encrypt, format, and mount a $device at $mountpoint"
-    sudo fdisk $device
-    sudo cryptsetup luksFormat $device
-    sudo cryptsetup luksOpen $device $mountpoint
-    sudo mkfs -t ext4 /dev/mapper/$mountpoint
-    sudo mkdir -p /mnt/$mountpoint
-    sudo mount /dev/mapper/$mountpoint /mnt/$mountpoint
+    echo "--> This will encrypt, format, and mount a $device at $mountpoint"
+    sudo cryptsetup luksFormat "$device"
+    sudo cryptsetup luksOpen "$device" "$mountpoint"
+    sudo mkfs -t ext4 "/dev/mapper/$mountpoint"
+    sudo mkdir -p "/mnt/$mountpoint"
+    sudo mount "/dev/mapper/$mountpoint" "/mnt/$mountpoint"
     echo "--> Your new volume is encrypted, formatted, and mounted at /mnt/$mountpoint"
   ;;
   *)
